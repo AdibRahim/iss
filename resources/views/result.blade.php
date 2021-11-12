@@ -23,14 +23,17 @@
         </style>
     </head>
     <body class="antialiased">
-        <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
+        <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-1 sm:pt-0">
             <div class="card">
+                <div class="card-header">
+                    <h1>Timestamp And Location ISS</h1>
+                </div>
                 <div class="card-body">
                     @php
-                        $no = 0;
+                        $no = 1;
                     @endphp
                     @foreach ($timestamps as $timestamp)
-                        <h4>{{ $no++; }}{{ Carbon\Carbon::createFromTimestamp($timestamp)->toDateTimeString();  }}</h4>
+                        <h4>{{ $no++; }}.{{ Carbon\Carbon::createFromTimestamp($timestamp)->toDateTimeString();  }}</h4>
                     @endforeach
                 </div>
               
