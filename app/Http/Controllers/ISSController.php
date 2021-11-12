@@ -46,7 +46,7 @@ class ISSController extends Controller
 
         //check if time more than current date
         if($timeFormated->gt(Carbon::now())){
-            return null;
+            abort(404);
         }
 
         //format subtract an hour 
@@ -79,6 +79,7 @@ class ISSController extends Controller
         //         dump(Carbon::createFromTimestamp($timestamp)->toDateTimeString());
         //     }
         // dd($timestamps);
+        sort($timestamps);
 
         $latitude = array();
         $longitude = array();
@@ -90,14 +91,19 @@ class ISSController extends Controller
         }
 
         $locations = array();
+        $google = array();
+
 
         for($i=0;$i<count($latitude);$i++){
             $iss = Http::withoutVerifying()->get('https://api.wheretheiss.at/v1/coordinates/'.$latitude[$i].','.$longitude[$i])->throw()->json();   
-            $check = empty($iss[0]['longitude']) ? "No Location" : $iss[0]['longitude'];
+            $check = $iss['country_code'] == "??" ? "Undefined" : $iss['country_code'];
+            
             array_push($locations,$check);
+            array_push($google,empty($iss['map_url']) ? "#" : $iss['map_url']);
         }
 
-        return view('result')->with('timestamps',$timestamps)->with('locations',$locations);
+
+        return view('result')->with('timestamps',$timestamps)->with('locations',$locations)->with('google',$google)->with('timeFormated',$timeFormated);
     }
 
     /**
