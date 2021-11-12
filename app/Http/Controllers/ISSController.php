@@ -89,15 +89,15 @@ class ISSController extends Controller
             array_push($longitude,$iss[0]['longitude']);
         }
 
-        $location = array();
+        $locations = array();
 
         for($i=0;$i<count($latitude);$i++){
             $iss = Http::withoutVerifying()->get('https://api.wheretheiss.at/v1/coordinates/'.$latitude[$i].','.$longitude[$i])->throw()->json();   
             $check = empty($iss[0]['longitude']) ? "No Location" : $iss[0]['longitude'];
-            array_push($location,$check);
+            array_push($locations,$check);
         }
 
-        return view('result')->compact([$timestamps,$location]);
+        return view('result')->with('timestamps',$timestamps)->with('locations',$locations);
     }
 
     /**

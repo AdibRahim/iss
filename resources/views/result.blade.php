@@ -26,14 +26,12 @@
         <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('store') }}" method="POST">
-                        @csrf
-                        <h4>Insert Date</h4>
-                        <input type="date" name="date">
-                        <h4>Insert Time</h4>
-                        <input type="time" name="time"> 
-                        <button class="btn btn-success" type="submit">Enter</button>
-                    </form>
+                    @php
+                        $no = 0;
+                    @endphp
+                    @foreach ($timestamps as $timestamp)
+                        <h4>{{ $no++; }}{{ Carbon\Carbon::createFromTimestamp($timestamp)->toDateTimeString();  }}</h4>
+                    @endforeach
                 </div>
               
             </div>
