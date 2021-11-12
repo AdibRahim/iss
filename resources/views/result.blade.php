@@ -32,11 +32,21 @@
                     @php
                         $no = 1;
                     @endphp
-                    @foreach ($timestamps as $timestamp)
-                        <h4>{{ $no++; }}.{{ Carbon\Carbon::createFromTimestamp($timestamp)->toDateTimeString();  }}</h4>
-                    @endforeach
+                    <div class="">Click to identify the location on Google Maps.</div>
+                    <div class="list-group">
+                        @for ($i = 0; $i < count($timestamps); $i++)
+                            @if (strval($timestamps[$i]) === strval($timeFormated))
+                                <a href="{{ $google[$i]; }}" class="list-group-item list-group-item-action active" target="_blank">{{ $i + 1; }}.{{ Carbon\Carbon::createFromTimestamp($timestamps[$i])->format('d/m/Y h:i a');  }} - {{ $locations[$i]; }} : Selected Date</a>
+                            @else
+                                <a href="{{ $google[$i]; }}" class="list-group-item list-group-item-action" target="_blank">{{ $i + 1; }}.{{ Carbon\Carbon::createFromTimestamp($timestamps[$i])->format('d/m/Y h:i a');  }} - {{ $locations[$i]; }}</a>
+                            @endif
+                        @endfor
+                        {{-- @foreach ($timestamps as $timestamp)
+                        <a href="" class="list-group-item list-group-item-action">{{ $no++; }}.{{ Carbon\Carbon::createFromTimestamp($timestamp)->format('d/m/Y h:i a');  }}</a>
+                            {{-- <h4>{{ $no++; }}.{{ Carbon\Carbon::createFromTimestamp($timestamp)->toDateTimeString();  }}</h4> 
+                        @endforeach --}}
+                    </div>
                 </div>
-              
             </div>
         </div>
     </body>
